@@ -23,11 +23,10 @@ namespace Note
             table = new DataTable();
             table.Columns.Add("Title", typeof(string));
             table.Columns.Add("Message", typeof(string));
-            
+
             dataGridView1.DataSource = table;
 
-            dataGridView1.Columns["Messages"].Visible = false;
-            dataGridView1.Columns["Title"].Width = 183;
+            dataGridView1.Columns["Title"].Width = 100;
         }
         private void bttNew_Click(object sender, EventArgs e)
         {
@@ -37,17 +36,28 @@ namespace Note
 
         private void bttSave_Click(object sender, EventArgs e)
         {
+            table.Rows.Add(txtTitle.Text, txtMessage.Text);
 
+            txtTitle.Clear();
+            txtMessage.Clear();
         }
 
         private void bttDelete_Click(object sender, EventArgs e)
         {
+            int index = dataGridView1.CurrentCell.RowIndex;
 
+            table.Rows[index].Delete();
         }
 
         private void bttRead_Click(object sender, EventArgs e)
         {
+            int index = dataGridView1.CurrentCell.RowIndex;
 
+            if (index > - 1)
+            {
+                txtTitle.Text = table.Rows[index].ItemArray[0].ToString();
+                txtMessage.Text = table.Rows[index].ItemArray[1].ToString();
+            }
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
